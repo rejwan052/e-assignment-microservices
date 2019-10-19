@@ -1,4 +1,4 @@
-package com.info.eassignment.eassignmentzuulapigateway;
+package com.info.eassignment.api.gateway;
 
 import org.junit.Test;
 import org.junit.runner.RunWith;
