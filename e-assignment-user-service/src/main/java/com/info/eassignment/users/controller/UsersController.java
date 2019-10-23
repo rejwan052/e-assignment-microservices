@@ -32,7 +32,7 @@ public class UsersController {
 
     @GetMapping("/users")
     public String status() {
-        return "Working... on port " + env.getProperty("local.server.port");
+        return "Working... on port " + env.getProperty("local.server.port")+" ,with token "+ env.getProperty("token.secret");
     }
 
     @PostMapping(value = "/users")
