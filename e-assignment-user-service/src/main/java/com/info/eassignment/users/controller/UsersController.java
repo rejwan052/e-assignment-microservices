@@ -60,7 +60,14 @@ public class UsersController {
     
     @GetMapping("/students")
     public String getStudents() {
-    	return userService.getStudents();
+    	
+    	String str = "Hello i'am ";
+    	
+    	String str1 = userService.getStudents();
+    	
+    	System.out.println(str1);
+    	
+    	return str;
     }
     
 
