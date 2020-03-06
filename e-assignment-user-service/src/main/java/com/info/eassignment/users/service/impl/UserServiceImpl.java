@@ -2,6 +2,8 @@ package com.info.eassignment.users.service.impl;
 
 import org.modelmapper.ModelMapper;
 import org.modelmapper.convention.MatchingStrategies;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -21,6 +23,8 @@ import java.util.UUID;
 
 @Service
 public class UserServiceImpl implements UserService {
+	
+	Logger logger = LoggerFactory.getLogger(this.getClass());
 
     UserRepository userRepository;
     BCryptPasswordEncoder bCryptPasswordEncoder;
@@ -82,7 +86,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public String getStudents() {
 		
+		logger.info("Before call students service");
+		
 		String students = studentService.getStudents();
+		
+		logger.info("After call students service");
 		
 		return students;
 	}

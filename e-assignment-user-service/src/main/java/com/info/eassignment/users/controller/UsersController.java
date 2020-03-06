@@ -38,7 +38,7 @@ public class UsersController {
         return "Working... on port " + env.getProperty("local.server.port")+" ,with token "+ env.getProperty("token.secret");
     }*/
 
-    @PostMapping(value = "/users")
+    @PostMapping("/users")
     public ResponseEntity<CreateUserResponse> createUser(@Valid @RequestBody CreateUserRequest userRequest) {
 
         ModelMapper modelMapper = new ModelMapper();
