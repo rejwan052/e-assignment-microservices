@@ -3,4 +3,5 @@ target/
 !.mvn/wrapper/maven-wrapper.jar
 .project
 .factorypath
+.settings
 
