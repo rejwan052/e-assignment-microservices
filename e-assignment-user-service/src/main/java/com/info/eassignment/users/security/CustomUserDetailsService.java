@@ -7,6 +7,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.info.eassignment.users.mapper.UserMapper;
 import com.info.eassignment.users.persistence.model.User;
 import com.info.eassignment.users.persistence.repository.UserRepository;
 
@@ -28,6 +29,7 @@ public class CustomUserDetailsService implements UserDetailsService {
                 );
 
         return UserPrincipal.create(user);
+        //return new AuthenticatedUser(UserMapper.mapEntityIntoDTO(user));
     }
 
 
@@ -39,6 +41,7 @@ public class CustomUserDetailsService implements UserDetailsService {
         );
 
         return UserPrincipal.create(user);
+        //return new AuthenticatedUser(UserMapper.mapEntityIntoDTO(user));
     }
 
 }

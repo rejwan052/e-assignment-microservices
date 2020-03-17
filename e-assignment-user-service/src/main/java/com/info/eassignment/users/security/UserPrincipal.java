@@ -14,7 +14,9 @@ import com.info.eassignment.users.persistence.model.User;
 
 public class UserPrincipal implements UserDetails {
 
-    private Long id;
+	private static final long serialVersionUID = 5185831892179749743L;
+
+	private Long id;
 
     private String name;
 

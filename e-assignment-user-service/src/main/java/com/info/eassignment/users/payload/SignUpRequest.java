@@ -2,8 +2,13 @@ package com.info.eassignment.users.payload;
 
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
+import com.info.eassignment.users.validation.PasswordMatches;
+import com.info.eassignment.users.validation.ValidPassword;
+
+@PasswordMatches
 public class SignUpRequest {
 
     @NotBlank
@@ -19,9 +24,12 @@ public class SignUpRequest {
     @Email
     private String email;
 
-    @NotBlank
-    @Size(min = 6, max = 20)
+    @ValidPassword
     private String password;
+    
+    @NotNull
+    @Size(min = 1)
+    private String matchingPassword;
 
     public String getName() {
         return name;
@@ -54,5 +62,13 @@ public class SignUpRequest {
     public void setPassword(String password) {
         this.password = password;
     }
+
+	public String getMatchingPassword() {
+		return matchingPassword;
+	}
+
+	public void setMatchingPassword(String matchingPassword) {
+		this.matchingPassword = matchingPassword;
+	}
 
 }

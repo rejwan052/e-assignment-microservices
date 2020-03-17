@@ -127,6 +127,7 @@ public class AuthController {
         User user = new User(signUpRequest.getName(), signUpRequest.getUsername(), signUpRequest.getEmail(),signUpRequest.getPassword());
 
         user.setPassword(passwordEncoder.encode(user.getPassword()));
+        user.setEnabled(true);
 
         Role userRole = roleRepository.findByName("ROLE_USER");
 		/* LOGGER.info("user role ::: "+userRole.toString()); */

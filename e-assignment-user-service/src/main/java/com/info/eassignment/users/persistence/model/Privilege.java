@@ -1,22 +1,31 @@
 package com.info.eassignment.users.persistence.model;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
-
-import javax.persistence.*;
 import java.util.Collection;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.ManyToMany;
+import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.info.eassignment.users.persistence.model.audit.UserDateAudit;
 
 @Entity
 @Table(name="privileges")
-public class Privilege {
+public class Privilege extends UserDateAudit{
 
-    @Id
+	private static final long serialVersionUID = 8969710253274226625L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
 
     private String name;
 
     @ManyToMany(mappedBy = "privileges")
-    @JsonBackReference
+    @JsonIgnore
     private Collection<Role> roles;
 
     public Privilege() {

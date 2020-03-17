@@ -16,8 +16,9 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 )
 public abstract class UserDateAudit extends DateAudit {
 
+	private static final long serialVersionUID = -2518930354534366638L;
 
-    @CreatedBy
+	@CreatedBy
     @Column(updatable = false)
     private Long createdBy;
 

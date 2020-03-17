@@ -10,6 +10,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 import javax.persistence.UniqueConstraint;
 import javax.validation.constraints.Email;
@@ -17,7 +18,9 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 
 import org.hibernate.annotations.NaturalId;
+import org.jboss.aerogear.security.otp.api.Base32;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.info.eassignment.users.persistence.model.audit.DateAudit;
 
@@ -32,7 +35,9 @@ import com.info.eassignment.users.persistence.model.audit.DateAudit;
 })
 public class User extends DateAudit {
 
-    @Id
+	private static final long serialVersionUID = 1721716328489414629L;
+
+	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
@@ -53,17 +58,35 @@ public class User extends DateAudit {
     @NotBlank
     @Size(max = 100)
     private String password;
-
+    
+    private boolean enabled;
+    
+    @JsonIgnore
+    private boolean accountNonLocked;
+    
+    @JsonIgnore
+    private String secret;
+    
+    private Character gender;
+    
+    private String bloodGroup;
+    
 
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
     @JsonManagedReference
     private Collection<Role> roles;
+    
+    @ManyToOne(fetch = FetchType.EAGER)
+    @JoinTable(name = "users_organization", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
+    		   inverseJoinColumns = @JoinColumn(name = "organization_id", referencedColumnName = "id"))
+    private Organization organization;
 
-
+    @JsonIgnore
     public User() {
-
+    	 super();
+         this.secret = Base32.random();
     }
 
     public User(String name, String username, String email, String password) {
@@ -120,8 +143,48 @@ public class User extends DateAudit {
     public void setRoles(Collection<Role> roles) {
         this.roles = roles;
     }
+    
+    public boolean isEnabled() {
+		return enabled;
+	}
 
-    @Override
+	public void setEnabled(boolean enabled) {
+		this.enabled = enabled;
+	}
+
+	public boolean isAccountNonLocked() {
+		return accountNonLocked;
+	}
+
+	public void setAccountNonLocked(boolean accountNonLocked) {
+		this.accountNonLocked = accountNonLocked;
+	}
+
+	public Character getGender() {
+		return gender;
+	}
+
+	public void setGender(Character gender) {
+		this.gender = gender;
+	}
+
+	public String getBloodGroup() {
+		return bloodGroup;
+	}
+
+	public void setBloodGroup(String bloodGroup) {
+		this.bloodGroup = bloodGroup;
+	}
+
+	public Organization getOrganization() {
+		return organization;
+	}
+
+	public void setOrganization(Organization organization) {
+		this.organization = organization;
+	}
+
+	@Override
     public int hashCode() {
         final int prime = 31;
         int result = 1;
