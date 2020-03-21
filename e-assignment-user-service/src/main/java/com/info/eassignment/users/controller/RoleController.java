@@ -22,52 +22,53 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.info.eassignment.users.persistence.model.Privilege;
-import com.info.eassignment.users.service.PrivilegeService;
+import com.info.eassignment.users.persistence.model.Role;
+import com.info.eassignment.users.service.RoleService;
 import com.querydsl.core.types.Predicate;
 
 @RestController
 @RequestMapping("/api/v1")
-public class PrivilegeController {
+public class RoleController {
 	
 	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
 	
+	
 	@Autowired
-	private PrivilegeService privilegeService;
+	private RoleService roleService;
 	
 	
-	// Get all privileges
-    @GetMapping("/privileges")
-    public ResponseEntity<Page<Privilege>> getAllPrivileges(@QuerydslPredicate(root = Privilege.class) Predicate predicate,
+	// Get all roles
+    @GetMapping("/roles")
+    public ResponseEntity<Page<Role>> getAllRoles(@QuerydslPredicate(root = Role.class) Predicate predicate,
                                                             @PageableDefault(size=10) @SortDefault.SortDefaults({
                                                             @SortDefault(sort = "createdAt", direction = Sort.Direction.DESC)}) Pageable pageable){
 
-        return privilegeService.getAllPrivilegesResponse(predicate,pageable);
+        return roleService.getAllRolesResponse(predicate,pageable);
 
     }
     
-	// Get a single privilege
-    @GetMapping("/privileges/{id}")
-    public ResponseEntity<Privilege> getSinglePrivilege(@PathVariable Long id){
-        return privilegeService.getSinglePrivilegeResponse(id);
+	// Get a single role
+    @GetMapping("/roles/{id}")
+    public ResponseEntity<Role> getSingleRole(@PathVariable Long id){
+        return roleService.getSingleRoleResponse(id);
     }
 
-    // Create a new privilege
-    @PostMapping("/privileges")
-    public ResponseEntity<Privilege> createNewPrivilege(@Valid @RequestBody Privilege privilege, HttpServletRequest request){
-        return privilegeService.createNewPrivilege(privilege, request);
+    // Create a new role
+    @PostMapping("/roles")
+    public ResponseEntity<Role> createNewRole(@Valid @RequestBody Role role, HttpServletRequest request){
+        return roleService.createNewRole(role, request);
     }
 
-    // Update Privilege with PATCH
-    @PatchMapping("/privileges/{id}")
-    public ResponseEntity<Privilege> patchUpdatePrivilege(@PathVariable Long id, @RequestBody Privilege privilege) {
-        return privilegeService.patchUpdatePrivilege(id, privilege);
+    // Update Role with PATCH
+    @PatchMapping("/roles/{id}")
+    public ResponseEntity<Role> patchUpdateRole(@PathVariable Long id, @RequestBody Role role) {
+        return roleService.patchUpdateRole(id, role);
     }
 
-    // Update Privilege with PUT
-    @PutMapping("/privileges/{id}")
-    public ResponseEntity<Privilege> putUpdatePrivilege(@PathVariable Long id, @RequestBody Privilege privilege) {
-        return privilegeService.putUpdatePrivilege(id, privilege);
+    // Update Role with PUT
+    @PutMapping("/roles/{id}")
+    public ResponseEntity<Role> putUpdateRole(@PathVariable Long id, @RequestBody Role role) {
+        return roleService.putUpdateRole(id, role);
     }
 
 }

@@ -21,7 +21,6 @@ import org.hibernate.annotations.NaturalId;
 import org.jboss.aerogear.security.otp.api.Base32;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import com.fasterxml.jackson.annotation.JsonManagedReference;
 import com.info.eassignment.users.persistence.model.audit.DateAudit;
 
 @Entity
@@ -75,7 +74,6 @@ public class User extends DateAudit {
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "users_roles", joinColumns = @JoinColumn(name = "user_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"))
-    @JsonManagedReference
     private Collection<Role> roles;
     
     @ManyToOne(fetch = FetchType.EAGER)

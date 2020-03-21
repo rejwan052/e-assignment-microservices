@@ -11,7 +11,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
 import javax.persistence.Table;
 
-import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.info.eassignment.users.persistence.model.audit.UserDateAudit;
 
 @Entity
@@ -25,13 +25,14 @@ public class Role extends UserDateAudit{
     private Long id;
 
     @ManyToMany(mappedBy = "roles")
-    @JsonBackReference
+    @JsonIgnore
     private Collection<User> users;
 
     @ManyToMany
     @JoinTable(name = "roles_privileges",
             joinColumns = @JoinColumn(name = "role_id", referencedColumnName = "id"),
             inverseJoinColumns = @JoinColumn(name = "privilege_id", referencedColumnName = "id"))
+    @JsonIgnore
     private Collection<Privilege> privileges;
 
     private String name;

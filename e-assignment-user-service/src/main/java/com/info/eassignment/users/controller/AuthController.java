@@ -84,8 +84,7 @@ public class AuthController {
 
         saveRefreshToken(userPrincipal, refreshToken);
 
-        return ResponseEntity.ok(new JwtAuthenticationResponse(accessToken, refreshToken, jwtExpirationInMs,
-                getRolesFromAuthorities(userPrincipal.getAuthorities())));
+        return ResponseEntity.ok(new JwtAuthenticationResponse(accessToken, refreshToken, jwtExpirationInMs,getRolesFromAuthorities(userPrincipal.getAuthorities())));
     }
 
     @PostMapping("/refreshToken")
@@ -130,7 +129,7 @@ public class AuthController {
         user.setEnabled(true);
 
         Role userRole = roleRepository.findByName("ROLE_USER");
-		/* LOGGER.info("user role ::: "+userRole.toString()); */
+		LOGGER.info("user role ::: "+userRole.toString());
 
         user.setRoles(Collections.singleton(userRole));
 

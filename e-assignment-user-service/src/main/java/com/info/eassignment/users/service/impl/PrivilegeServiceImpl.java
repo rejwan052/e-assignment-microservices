@@ -53,15 +53,15 @@ public class PrivilegeServiceImpl implements PrivilegeService {
 
 	@Override
 	public ResponseEntity<Privilege> createNewPrivilege(Privilege privilege, HttpServletRequest request) {
-		 if(isPrivilegeExist(privilege.getName())) {
-	            throw new EntityAttributeAlreadyExistsException("Privilege already exists with "+privilege.getName());
-	        }
+		if(isPrivilegeExist(privilege.getName())) {
+          throw new EntityAttributeAlreadyExistsException("Privilege already exists with "+privilege.getName());
+		}
 
-		 	Privilege newPrivilege = privilegeRepository.saveAndFlush(privilege);
-	        HttpHeaders responseHeaders = new HttpHeaders();
-	        responseHeaders.set("Location", departmentUrlHelper(newPrivilege, request));
+	 	Privilege newPrivilege = privilegeRepository.saveAndFlush(privilege);
+        HttpHeaders responseHeaders = new HttpHeaders();
+        responseHeaders.set("Location", privilegeUrlHelper(newPrivilege, request));
 
-	        return new ResponseEntity<Privilege>(newPrivilege, responseHeaders, HttpStatus.CREATED);
+        return new ResponseEntity<Privilege>(newPrivilege, responseHeaders, HttpStatus.CREATED);
 	}
 
 	@Override
@@ -89,7 +89,7 @@ public class PrivilegeServiceImpl implements PrivilegeService {
         return false;
     }
 
-    private String departmentUrlHelper(Privilege privilege, HttpServletRequest request) {
+    private String privilegeUrlHelper(Privilege privilege, HttpServletRequest request) {
         StringBuilder resourcePath = new StringBuilder();
 
         resourcePath.append(request.getRequestURL());

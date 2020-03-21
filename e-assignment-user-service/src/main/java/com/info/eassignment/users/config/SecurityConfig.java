@@ -27,6 +27,13 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Autowired
     CustomUserDetailsService customUserDetailsService;
+    
+	/*
+	 * @Autowired private JwtAuthenticationEntryPoint unauthorizedHandler;
+	 * 
+	 * @Bean public JwtAuthenticationFilter jwtAuthenticationFilter() { return new
+	 * JwtAuthenticationFilter(); }
+	 */
 
     @Override
     public void configure(AuthenticationManagerBuilder authenticationManagerBuilder) throws Exception {
@@ -53,6 +60,11 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
                 .and()
                 .csrf()
                 .disable()
+				/*
+				 * .exceptionHandling() .authenticationEntryPoint(unauthorizedHandler) .and()
+				 * .sessionManagement() .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
+				 * .and()
+				 */
                 .authorizeRequests()
                 .antMatchers("/",
                         "/favicon.ico",

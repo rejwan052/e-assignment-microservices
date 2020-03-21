@@ -10,6 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.core.env.Environment;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -19,11 +20,17 @@ import org.springframework.web.filter.OncePerRequestFilter;
 
 public class JwtAuthenticationFilter extends OncePerRequestFilter{
 
+	private final Logger LOGGER = LoggerFactory.getLogger(getClass());
+	
     @Autowired
     private JwtTokenProvider tokenProvider;
 
     @Autowired
     private CustomUserDetailsService customUserDetailsService;
+    
+    
+    @Autowired
+    private Environment environment;
 
     private static final Logger logger = LoggerFactory.getLogger(JwtAuthenticationFilter.class);
 
@@ -49,9 +56,13 @@ public class JwtAuthenticationFilter extends OncePerRequestFilter{
     }
 
     private String getJwtFromRequest(HttpServletRequest request) {
-        String bearerToken = request.getHeader("Authorization");
-        if (StringUtils.hasText(bearerToken) && bearerToken.startsWith("Bearer ")) {
-            return bearerToken.substring(7, bearerToken.length());
+    	String authorizationHeader = request.getHeader(environment.getProperty("authorization.token.header.name"));
+        //String bearerToken = request.getHeader("Authorization");
+    	String token = authorizationHeader.replace(environment.getProperty("authorization.token.header.prefix"), "");
+    	LOGGER.info("token "+token);
+    	
+        if (StringUtils.hasText(authorizationHeader) && authorizationHeader.startsWith("Bearer ")) {
+            return authorizationHeader.substring(7, authorizationHeader.length());
         }
         return null;
     }
